@@ -1,0 +1,50 @@
+<ul class="sidebar navbar-nav">
+    <li class="nav-item active">
+        <a class="nav-link" href="/register">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Register</span>
+        </a>
+    </li>
+    {% if user.is_authenticated %}
+        {% if not user.is_superuser %}
+        <li class="nav-item">
+            <a class="nav-link" href="/info">
+                <i class="fas fa-fw fa-database"></i>
+                <span>Profile</span>
+            </a>
+        </li>
+        {% endif %}
+    <li class="nav-item">
+        <a class="nav-link" href="/vehi_show">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Vehicles</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/show">
+            <i class="fas fa-fw fa-bullseye"></i>
+            <span>Rental Record</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/reset_password">
+            <i class="fas fa-fw fa-bullseye"></i>
+            <span>Reset Password</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/logout">
+            <i class="fas fa-fw fa-bullseye"></i>
+            <span>Log Out</span>
+        </a>
+    </li>
+    {% else %}
+    <li class="nav-item">
+        <a class="nav-link" href="/accounts/login/">
+            <i class="fas fa-fw fa-bullseye"></i>
+            <span>Login</span>
+        </a>
+    </li>
+    {% endif %}
+    
+</ul>

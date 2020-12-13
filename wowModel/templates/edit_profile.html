@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block body_block %}
+
+{% if cust_form.errors %}
+    {% for field in cust_form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{field.name}} : {{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in cust_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if detail_form.errors %}
+    {% for field in detail_form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{field.name}} : {{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in detail_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form enctype="multipart/form-data" method="POST">
+  <input type="hidden" name="csrfmiddlewaretoken" value="Ihhu5VsJZaZ7DnlNRihlsx9DIjWlj39r11GC1V5UpVU4Y4QAl6LeUkok9sBzv31K">
+  {% csrf_token %}
+  <!-- <ul class="errorlist"><li>This field is required.</li></ul> -->
+    <p><label for="id_fname">First Name:</label> 
+      <input type="text" name="fname" maxlength="32" required id="id_fname" value="{{customer.fname}}"></p>
+
+    <p><label for="id_lname">Last Name:</label> 
+      <input type="text" name="lname" maxlength="32" required id="id_lname" value="{{customer.lname}}"></p>
+
+    <p><label for="id_country">Country:</label> 
+      <input type="text" name="country" maxlength="32" required id="id_country" value="{{customer.country}}"></p>
+    
+    <p><label for="id_state">State:</label> 
+      <input type="text" name="state" maxlength="32" required id="id_state" value="{{customer.state}}"></p>
+    
+    <p><label for="id_city">City:</label> 
+      <input type="text" name="city" maxlength="32" required id="id_city" value="{{customer.city}}"></p>
+    
+    <p><label for="id_street">Street:</label> 
+      <input type="text" name="street" maxlength="50" required id="id_street" value="{{customer.street}}"></p>
+    
+    <p><label for="id_zipcode">Zipcode:</label> 
+      <input type="number" name="zipcode" step="1" required id="id_zipcode" value="{{customer.zipcode}}"></p>
+    
+    <p><label for="id_email">Email:</label> 
+      <input type="email" name="email" maxlength="254" required id="id_email" value="{{customer.email}}"></p>
+    
+    <p><label for="id_phone">Phone:</label> 
+      <input type="number" name="phone" step="1" required id="id_phone" value="{{customer.phone}}"></p>
+
+    <p><label for="id_cust_type">Customer Type:</label>
+      <select name="cust_type" required id="id_cust_type">
+      <option value="" selected>---------</option>
+      <option value="I"> Individual </option>
+      <option value="C"> Corporate </option>
+    </select></p>
+   
+      
+    {% if indi %}
+      <p><label for="id_dl_num">Driver License Number:</label>  
+        <input type="text" name="dl_num" maxlength="15" 
+          required id="id_dl_num" value="{{detail.dl_num}}"></p>
+    
+      <p><label for="id_insur_com_name">Insurance Company Name:</label> 
+        <input type="text" name="insur_com_name" maxlength="32" 
+          required id="id_insur_com_name" value="{{detail.insur_com_name}}"></p>
+    
+      <p><label for="id_insur_polic_num">Insurance Policy Number:</label> 
+        <input type="text" name="insur_polic_num" maxlength="12" 
+          required id="id_insur_polic_num" value="{{detail.insur_polic_num}}"></p>
+          
+    {% else %}
+      <p><label for="id_employee_id">Employee ID:</label> 
+        <input type="number" name="employee_id" step="1" 
+          required id="id_employee_id" value="{{detail.employee_id}}"></p>
+
+      <p><label for="id_corp">Corporation:</label> 
+        <select name="corp" required id="id_corp">
+        <option value="" selected>---------</option>
+        {% for corp in corporations %}
+                <option value="{{ corp.corp_id }}"> 
+                    {{corp.corp_name}}({{corp.corp_id}})</option>
+          {% endfor%}
+      </select></p>
+      {% endif %}
+      <input type="submit" name="" value="Update">
+    </form>
+
+<!-- 
+<form enctype="multipart/form-data" method="POST">
+  {% csrf_token %}
+  {{ cust_form.as_p }}
+  {{ detail_form.as_p }}
+  <input type="submit" name="" value="Update">
+</form> -->
+
+{% endblock %}

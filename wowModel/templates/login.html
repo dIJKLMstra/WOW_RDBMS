@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h2>    Login Here : </h2>
+      <form class="form-horizontal" role="form" method="post" action="/accounts/login/">
+          {% csrf_token %}
+          {# A more "HTML" way of creating the login form#}
+          <label for="username">Username:</label>
+          <input type="text" class="btn btn-primary btn-block" name="username" placeholder="Username">
+          <label for="password">Password:</label>
+          <input type="password" class="btn btn-primary btn-block" name="password" placeholder="Password">
+          <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-sign-in"></i> Login</button>
+      </form>
+        <a class="d-block small mt-3" href="/register">Register an Account</a>
+        <a class="d-block small" href="/reset_password"> Forgot Password? </a>
+    </div>
+  </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $("#id_username").attr("placeholder", "Enter Username");
+        $("#id_password").attr("placeholder", "Enter Password");
+    </script>
+{% endblock %}

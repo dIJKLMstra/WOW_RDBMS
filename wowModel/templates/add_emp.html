@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block body_block %}
+
+  <!-- <form enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="" value="add">
+  </form> -->
+
+  <form enctype="multipart/form-data" method="POST">
+    <input type="hidden" name="csrfmiddlewaretoken" value="4gvoUKVjC7bx2BrPMp5FfrxHkd839vkFjiLGYjQ0BpjQySAgp2QJCIkMqfdMehbJ">
+    {% csrf_token %}
+    <ul class="errorlist"><li>This field is required.</li></ul>
+  <p><label for="id_customer">Customer:</label> <select name="customer" required id="id_customer">
+    <option value="" selected>---------</option>
+    {% for customer in customers %}
+    <option value="{{ customer.customer_id }}"> 
+      {{customer.fname}} {{customer.lname}}({{customer.customer_id}})</option>
+    {% endfor %}
+  
+  </select></p>
+  <ul class="errorlist"><li>This field is required.</li></ul>
+  <p><label for="id_pickup_date">Pickup date:</label> <input type="date" name="pickup_date" required id="id_pickup_date"></p>
+  <ul class="errorlist"><li>This field is required.</li></ul>
+  <p><label for="id_dropoff_date">Dropoff date:</label> <input type="date" name="dropoff_date" required id="id_dropoff_date"></p>
+  <ul class="errorlist"><li>This field is required.</li></ul>
+  <p><label for="id_start_odo">Start Odometer:</label> <input type="number" name="start_odo" step="1" required id="id_start_odo"></p>
+  <ul class="errorlist"><li>This field is required.</li></ul>
+  <p><label for="id_end_odo">End Odometer:</label> <input type="number" name="end_odo" step="1" required id="id_end_odo"></p>
+  <p><label for="id_odo_limit">Odometer limit:</label> <input type="number" name="odo_limit" step="1" id="id_odo_limit"></p>
+  <ul class="errorlist"><li>This field is required.</li></ul>
+  <p><label for="id_vehicle">Vehicle:</label> 
+    <select name="vehicle" required id="id_vehicle">
+    <option value="" selected>---------</option>
+    {% for vehicle in vehicles %}
+    <option value="{{vehicle.vehicle_id}}"> 
+      {{vehicle.make}} {{vehicle.model}}({{vehicle.vehicle_id}})</option>
+    {% endfor %}
+  </select></p>
+
+  <ul class="errorlist"><li>This field is required.</li></ul>
+  <p><label for="id_pu_location">Pu location:</label> 
+    <select name="pu_location" required id="id_pu_location">
+    <option value="" selected>---------</option>
+    {% for location in locations %}
+    <option value="{{location.location_id}}"> 
+      {{location.city}}({{location.location_id}})</option>
+    {% endfor %}
+  </select></p>
+
+  <ul class="errorlist"><li>This field is required.</li></ul>
+  <p><label for="id_do_location">Do location:</label> <select name="do_location" required id="id_do_location">
+    <option value="" selected>---------</option>
+    {% for location in locations %}
+    <option value="{{location.location_id}}"> 
+      {{location.city}}({{location.location_id}})</option>
+    {% endfor %}
+  </select></p>
+
+    <input type="submit" name="" value="Add">
+  </form>
+
+
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body_block %}
+    <div id="content-wrapper">
+        {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{field.name}} : {{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+        <div class="container-fluid">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Vehicle add
+                </div>
+                <div class="card-body">
+                    <form class="form-horizontal"  method="POST">
+                    {% csrf_token %}
+                    <div class ="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="xw6wkf4N4aKfgIz1KSYpUb03rzZ2OsCN4ZquVrr11X3TXSChRWAfKnmbKsP5oixD">
+                                    {% csrf_token %}
+                                    <label for="id_make">Make:</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="make" maxlength="32" required id="id_make" value="{{vehicle.make}}">
+                                    <label for="id_model">Model:</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="model" maxlength="32" required id="id_model" value="{{vehicle.model}}">
+                                    <label for="id_year">Year:</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="number" class="form-control" name="year" step="1" required id="id_year" value="{{vehicle.year}}">
+                                    <label for="id_vin">Vin:</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-label-group">
+                                    <input type="text" class="form-control" name="vin" maxlength="17" required id="id_vin" value="{{vehicle.vin}}">
+                                    <label for="id_class_id">Class id:</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label for="id_class_id">Class:</label>
+                                <select name="class_id" required id="id_class_id">
+                                <option value="" selected>---------</option>
+                                {% for cls in classes %}
+                                <option class="form-control" value="{{cls.class_id}}"> {{cls.class_name}}({{cls.class_id}})</option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label for="id_location">Location:</label>
+                                <select name="location" required id="id_location">
+                                <option value="" selected>---------</option>
+                                {% for location in locations %}
+                                <option value="{{location.location_id}}">
+                                {{location.city}}({{location.location_id}})</option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-label-group">
+                                    <label for="id_lp_num">License Plate Number:</label>
+                                    <input type="text" name="lp_num" maxlength="10"
+                                           required id="id_lp_num" value="{{vehicle.lp_num}}">
+                                </div>
+                            </div>
+                             <div class="col-md-12">
+                                <div class="form-label-group">
+                                    <input type="submit" class="btn btn-primary" name="" value="Update">
+                                    <a href="/vehi_show" class="btn btn-primary">Cancel</a>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $("#id_username").attr("placeholder", "Enter Username");
+        $("#id_password").attr("placeholder", "Enter Password");
+    </script>
+{% endblock %}

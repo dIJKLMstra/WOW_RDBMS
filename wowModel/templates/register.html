@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body_block %}
+
+{% if user_form.errors %}
+    {% for field in user_form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{field.name}} : {{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in user_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if customer_form.errors %}
+    {% for field in customer_form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{field.name}} : {{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in customer_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+  <div class="container">
+    <div class="jumbotron">
+        <h1>Register Here!</h1>
+        <h3>Please fill out this form.</h3>
+        <div class="card-body">
+        <form class="form-horizontal" method="POST">
+            {% csrf_token %}
+          <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+                          <input type="text" class="form-control"  name="username" placeholder="Username" maxlength="150" required id="id_username">
+                          <label for="id_username">Username:</label>
+                          <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+            <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+                          <input type="password" class="form-control"  name="password" placeholder="Password" required id="id_password">
+                          <label for="id_password">Password:</label>
+                      </div>
+                  </div>
+
+
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+                          <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required id="id_confirm_password">
+                          <label for="id_confirm_password">Confirm password:</label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+            <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+                          <input type="text" class="form-control"  name="fname" placeholder="First Name" maxlength="32" required id="id_fname">
+                          <label for="id_fname">First Name:</label>
+                      </div>
+                  </div>
+
+
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+
+                        <input type="text" class="form-control"  name="lname" placeholder="Last Name"maxlength="32" required id="id_lname">
+                        <label for="id_lname">Last Name:</label>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+
+                        <input type="text" class="form-control" name="country" placeholder="Country" maxlength="32" required id="id_country">
+                        <label for="id_country">Country:</label>
+
+              </div>
+          </div>
+
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+
+                        <input type="text" class="form-control" name="state" placeholder="State" maxlength="32" required id="id_state">
+                        <label for="id_state">State:</label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+
+                        <input type="text" class="form-control" name="city" placeholder="City" maxlength="32" required id="id_city">
+                        <label for="id_city">City:</label>
+                      </div>
+                  </div>
+
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+
+                        <input type="text" class="form-control" name="street" placeholder="Street" maxlength="50" required id="id_street">
+                        <label for="id_street">Street:</label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+
+                        <input type="number" class="form-control" name="zipcode" placeholder="Zipcode"  required id="id_zipcode">
+                        <label for="id_zipcode">Zipcode:</label>
+                      </div>
+                  </div>
+
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+
+                        <input type="email" class="form-control" name="email" placeholder="Email" maxlength="254" required id="id_email">
+                        <label for="id_email">Email:</label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-6">
+                      <div class="form-label-group">
+
+                        <input type="number" class="form-control" name="phone" placeholder="Phone"  required id="id_phone">
+                        <label for="id_phone">Phone:</label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-12">
+                      <label for="id_cust_type">Customer Type:</label>
+                      <select name="cust_type" required id="id_cust_type">
+                          <option value="" selected>---------</option>
+                          <option value="I"> Individual </option>
+                          <option value="C"> Corporate </option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+            <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
+            <!-- <input type="text" name="cust_type" maxlength="1" required id="id_cust_type"></p> -->
+        </form>
+    </div>
+  </div>
+  </div>
+        <!-- <form enctype="multipart/form-data"  method="POST">
+          {
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $("#id_username").attr("placeholder", "Enter Username");
+        $("#id_password").attr("placeholder", "Enter Password");
+    </script>
+{% endblock %}

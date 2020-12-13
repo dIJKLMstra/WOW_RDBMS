@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body_block %}
+    <div id="content-wrapper">
+        {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{field.name}} : {{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+        <div class="container-fluid">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Record Add
+                </div>
+                <div class="card-body">
+                    <form class="form-horizontal" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <input type="date" class="form-control" name="pickup_date" required id="id_pickup_date">
+                                        <label for="id_pickup_date">Pickup date:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <input type="date" class="form-control" name="dropoff_date" required id="id_dropoff_date">
+                                        <label for="id_dropoff_date">Dropoff date:</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <input type="number" class="form-control" name="start_odo" step="1" required id="id_start_odo">
+                                        <label for="id_start_odo">Start Odometer:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <input type="number" class="form-control" name="end_odo" step="1" required id="id_end_odo">
+                                        <label for="id_end_odo">End Odometer:</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <input type="number" class="form-control" name="odo_limit" step="1" id="id_odo_limit">
+                                        <label for="id_odo_limit">Odometer limit(Optional):</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <label for="id_customer">Customer:</label>
+                                    <select name="customer" required id="id_customer">
+                                    <option value="" selected>---------</option>
+                                    {% for customer in customers %}
+                                    <option value="{{ customer.customer_id }}">
+                                    {{customer.fname}} {{customer.lname}}({{customer.customer_id}})</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <label for="id_vehicle">Vehicle:</label>
+                                    <select name="vehicle" required id="id_vehicle">
+                                    <option value="" selected>---------</option>
+                                    {% for vehicle in vehicles %}
+                                    <option value="{{vehicle.vehicle_id}}">
+                                    {{vehicle.make}} {{vehicle.model}}({{vehicle.vehicle_id}})</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <label for="id_pu_location">Pickup Location:</label>
+                                    <select name="pu_location" required id="id_pu_location">
+                                    <option value="" selected>---------</option>
+                                    {% for location in locations %}
+                                    <option value="{{location.location_id}}">
+                                      {{location.city}}({{location.location_id}})</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <label for="id_do_location">Dropoff Location:</label>
+                                    <select name="do_location" required id="id_do_location">
+                                    <option value="" selected>---------</option>
+                                    {% for location in locations %}
+                                    <option value="{{location.location_id}}">
+                                      {{location.city}}({{location.location_id}})</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $("#id_username").attr("placeholder", "Enter Username");
+        $("#id_password").attr("placeholder", "Enter Password");
+    </script>
+{% endblock %}

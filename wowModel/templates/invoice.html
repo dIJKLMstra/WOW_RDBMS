@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body_block %}
+
+<div id="content-wrapper">
+
+    <div class="container-fluid">
+<table class="table table-striped table-bordered table-sm">  
+    <thead class="thead-dark">  
+    <tr>  
+        <th>Record ID</th>  
+        <th>Invoice Datetime</th>  
+        <th>Invoice Amount</th>  
+        {% if not indi %}
+            <th>Corporation Name</th>
+            <th>Corporation Discount</th>
+        {% endif %}
+    </tr>  
+    </thead>  
+    <tbody>  
+    <tr>  
+        <td>{{ invoice.record_id }}</td>
+        <td>{{ invoice.idate }}</td>  
+        <td>{{ invoice.amount }}</td>  
+        {% if not indi %}
+            <td> {{detail.corp.corp_name}}</td>
+            <td> {{detail.corp.corp_discount}}</td>
+        {% endif %}
+    </tr>  
+    </tbody>  
+</table>  
+
+<div class="card-body">
+    <form class="form-horizontal" method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <div class="form-row">
+            <div class="col-md-12">
+            <label for="id_method">Payment Method:</label> 
+            <select name="method" class="form-control" required id="id_method">
+            <option value="" selected>---------</option>
+            <option value="Credit"> Credit Card </option>
+            <option value="Debit"> Debit Card </option>
+            <option value="Gift"> Gift Card </option>
+            </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-md-12">
+                <div class="form-label-group">
+            <input type="number" class="form-control" name="card_num" placeholder="Card Number:" step="1" required id="id_card_num">
+            <label for="id_card_num">Card Number:</label> 
+            </div>
+        </div>
+        </div>
+    </div>
+
+    {% if indi %}
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-md-12">
+                <label for="id_coupon">Coupon:</label> 
+                <select name="coupon" class="form-control" id="id_coupon">
+                <option value="" selected>---------</option>
+                {% for coupon in detail.coupon.all %}
+                <option value="{{coupon.coupon_id}}"> 
+                    {{coupon.start_date}} -- {{coupon.end_date}}, {{coupon.discount}}({{coupon.coupon_id}})</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <input type="submit" class="btn btn-primary btn-block" name="" value="Pay it!">
+    <a href="/show" class="btn btn-primary btn-block">Cancel</a>
+</form>
+</div>
+<br>  
+<br>  
+</div>
+</div>
+{% endblock %}

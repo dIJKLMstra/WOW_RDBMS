@@ -1,0 +1,57 @@
+w7{% extends "base.html" %}
+{% load static %}
+{% block body_block %}
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{field.name}} : {{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+  <div class="container">
+    <div class="jumbotron">
+      {% if registered %}
+        <h2>Thank you for registering! You can login right now !</h2>
+      {% else %}
+        <h1>Register Here</h1>
+        <h3>Just fill out the form.</h3>
+
+        {% if indi %}
+          <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" name="" value="Register">
+          </form>
+
+        {% else %}
+          <form enctype="multipart/form-data" method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value="2ddZBTmVMJfsQoHsVwiTTVhjgfc6MbzSxVXvPhs8bbk0PUvLsA6SChs3xfMDrYY0">
+            {% csrf_token %}
+            <p><label for="id_employee_id">Employee ID:</label> 
+              <input type="number" name="employee_id" step="1" required id="id_employee_id"></p>
+
+            <p><label for="id_corp">Corporation:</label> 
+              <select name="corp" required id="id_corp">
+              <option value="" selected>---------</option>
+              {% for corp in corporations %}
+                <option value="{{ corp.corp_id }}"> 
+                    {{corp.corp_name}}({{corp.corp_id}})</option>
+              {% endfor%}
+            </select></p>
+
+            <input type="submit" name="" value="Register">
+          </form>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

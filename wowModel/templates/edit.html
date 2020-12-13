@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block body_block %}
+
+<!-- <form enctype="multipart/form-data" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" name="" value="Update">
+</form> -->
+
+<form enctype="multipart/form-data" method="POST">
+  <input type="hidden" name="csrfmiddlewaretoken" value="4gvoUKVjC7bx2BrPMp5FfrxHkd839vkFjiLGYjQ0BpjQySAgp2QJCIkMqfdMehbJ">
+  {% csrf_token %}
+  <ul class="errorlist"><li>This field is required.</li></ul>
+<p><label for="id_customer">Customer:</label> <select name="customer" required id="id_customer">
+  <option value="" selected>---------</option>
+  {% for customer in customers %}
+  <option value="{{ customer.customer_id }}"> 
+    {{customer.fname}} {{customer.lname}}({{customer.customer_id}})</option>
+  {% endfor %}
+
+</select></p>
+<ul class="errorlist"><li>This field is required.</li></ul>
+<p><label for="id_pickup_date">Pickup date:</label> <input type="date" name="pickup_date" required id="id_pickup_date"></p>
+<ul class="errorlist"><li>This field is required.</li></ul>
+<p><label for="id_dropoff_date">Dropoff date:</label> <input type="date" name="dropoff_date" required id="id_dropoff_date"></p>
+<ul class="errorlist"><li>This field is required.</li></ul>
+<p><label for="id_start_odo">Start Odometer:</label> <input type="number" name="start_odo" step="1" required id="id_start_odo"></p>
+<ul class="errorlist"><li>This field is required.</li></ul>
+<p><label for="id_end_odo">End Odometer:</label> <input type="number" name="end_odo" step="1" required id="id_end_odo"></p>
+<p><label for="id_odo_limit">Odometer limit:</label> <input type="number" name="odo_limit" step="1" id="id_odo_limit"></p>
+<ul class="errorlist"><li>This field is required.</li></ul>
+<p><label for="id_vehicle">Vehicle:</label> <select name="vehicle" required id="id_vehicle">
+  <option value="" selected>---------</option>
+  {% for vehicle in vehicles %}
+  <option value="{{vehicle.vehicle_id}}"> 
+    {{vehicle.make}} {{vehicle.model}}({{vehicle.vehicle_id}})</option>
+  {% endfor %}
+
+</select></p>
+<ul class="errorlist"><li>This field is required.</li></ul>
+<p><label for="id_pu_location">Pu location:</label> 
+  <select name="pu_location" required id="id_pu_location">
+  <option value="" selected>---------</option>
+  {% for location in locations %}
+  <option value="{{location.location_id}}"> 
+    {{location.city}}({{location.location_id}})</option>
+  {% endfor %}
+
+</select></p>
+<ul class="errorlist"><li>This field is required.</li></ul>
+<p><label for="id_do_location">Do location:</label> <select name="do_location" required id="id_do_location">
+  <option value="" selected>---------</option>
+  {% for location in locations %}
+  <option value="{{location.location_id}}"> 
+    {{location.city}}({{location.location_id}})</option>
+  {% endfor %}
+ 
+</select></p>
+  <input type="submit" name="" value="Update">
+</form>
+
+<!-- <form method="POST" class="post-form" action="/update/{{record.record_id}}">  
+        {% csrf_token %}  
+    <div class="container">  
+<br>  
+    <div class="form-group row">  
+    <label class="col-sm-1 col-form-label"></label>  
+    <div class="col-sm-4">  
+    <h3>Update Details</h3>  
+    </div>  
+  </div>  
+    <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Record Id:</label>  
+    <div class="col-sm-4">  
+        <input type="text" name="record_id" id="id_record_id" required maxlength="20" value="{{ record.record_id }}"/>  
+    </div>  
+  </div>  
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Pick-up Date:</label>  
+    <div class="col-sm-4">  
+        <input type="date" name="pudate" id="id_pudate" required maxlength="100" value="{{ record.pickup_date }}" />  
+    </div>  
+  </div>  
+    <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Drop-off Date:</label>  
+    <div class="col-sm-4">  
+        <input type="date" name="dodate"" id="id_dodate" required maxlength="254" value="{{ record.dropoff_date }}" />  
+    </div>  
+  </div>  
+    <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Start Odometer:</label>  
+    <div class="col-sm-4">  
+        <input type="text" name="start_odo" id="id_start_odo" required maxlength="15" value="{{ record.start_odo }}" />  
+    </div>
+  </div>  
+  <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">End Odometer:</label>  
+  <div class="col-sm-4">  
+      <input type="text" name="end_odo" id="id_end_odo" required maxlength="15" value="{{ record.end_odo }}" />  
+  </div>  
+</div>  
+<div class="form-group row">  
+<label class="col-sm-2 col-form-label">Odometer Limitation:</label>  
+<div class="col-sm-4">  
+    <input type="text" name="odo_limit" id="id_odo_limit" required maxlength="15" value="{{ record.odo_limit }}" />  
+</div>  
+</div>  
+<div class="form-group row">  
+<label class="col-sm-2 col-form-label">Vehicle:</label>  
+<div class="col-sm-4">  
+    <input type="text" name="vehicle" id="id_vehicle" required maxlength="15" value="{{ record.vehicle }}" />  
+</div>  
+  </div>  
+    <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Pick-up Location:</label>  
+    <div class="col-sm-4">  
+        <input type="text" name="start_odo" id="id_start_odo" required maxlength="15" value="{{ record.start_odo }}" />  
+    </div>  
+  </div>  
+    <div class="form-group row">  
+    <label class="col-sm-1 col-form-label"></label>  
+    <div class="col-sm-4">  
+    <button type="submit" class="btn btn-success">Update</button>  
+    </div>  
+  </div>  
+    </div>  
+</form>  -->
+{% endblock %}

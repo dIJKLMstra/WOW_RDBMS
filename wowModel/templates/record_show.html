@@ -1,0 +1,89 @@
+r{% extends 'base.html' %}
+
+{% load static %}
+{% block body_block %}
+ <div id="content-wrapper">
+
+        <div class="container-fluid">
+ 
+            <!-- DataTables Example -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Rental Record List
+                    {% if user.is_superuser %}
+                    <a  class="btn btn-sm btn-success" href="/emp"
+                        style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>  
+                                    <th>Record ID</th>  
+                                    <th>Pick-up Date</th>  
+                                    <th>Drop-off Date</th>  
+                                    <th>Start Odometer</th>  
+                                    <th>End Odometer</th> 
+                                    <th>Odometer Limitation</th>  
+                                    <th>Vehicle</th>  
+                                    <th>Pick-up Location</th>
+                                    <th>Drop-off Location</th>    
+                                    <th> Action </th>
+
+                                </tr>  
+                            </thead>
+
+                            <tbody>
+                    
+                              {% for record in records %}  
+                              <tr>  
+                                <td>{{ record.record_id}}</td>
+                                <td>{{ record.pickup_date}}</td>  
+                                <td>{{ record.dropoff_date}}</td>  
+                                <td>{{ record.start_odo}}</td>    
+                                <td>{{ record.end_odo }}</td>  
+                                <td>{{ record.odo_limit }}</td>  
+                                <td>{{ record.vehicle.make }}</td>  
+                                <td>{{ record.pu_location.city }}</td> 
+                                <td>{{ record.do_location.city }}</td> 
+                        
+                                <td>  
+                                    {% if user.is_superuser %}
+                                        <a href="/edit/{{ record.record_id }}"><span class="glyphicon glyphicon-pencil" >Edit</span></a>  
+                                        <a href="/delete/{{ record.record_id }}">Delete</a>  
+                                    {% else %}
+                                        {% if record.payment %}
+                                            <a href="/payment/{{ record.record_id }}">Payment</a>  
+                                        {% else %}
+                                            <a href="/invoice/{{ record.record_id }}">Invoice</a>  
+                                        {% endif %}
+                                    {% endif %}
+                                </td>  
+                            </tr>  
+                        {% endfor %}  
+                                  
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright © QI SUN 2020</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+{% endblock %}
+{% block javascript %}
+{% endblock %}
